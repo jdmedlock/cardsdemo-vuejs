@@ -1,7 +1,7 @@
 <template>
   <div className="App">
     <header className="App-header">
-      <h1>React Cards Demo</h1>
+      <h1>VueJS Cards Demo</h1>
       <CardContainer />
     </header>
   </div>
