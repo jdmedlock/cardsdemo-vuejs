@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="band"></div>
-    <p class="content">{ member.firstName }, { member.lastName }</p>
+    <p class="content">{{ member.firstName }}, {{ member.lastName }}</p>
   </div>
 </template>
 
