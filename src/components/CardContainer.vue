@@ -1,5 +1,5 @@
 <template>
-  <Card v-for="member in team" v-bind:member="member" v-bind:key="member.id"></Card>
+  <Card v-for="member in team" :member="member" :key="member.id"></Card>
 </template>
 
 <script>
@@ -10,16 +10,8 @@
     components: {
       Card
     },
-    setup() {
-      const team = [
-          {id: 1, firstName: "John", lastName: "Roku"},
-          {id: 2, firstName: "Rakesh", lastName: "Singh"},
-          {id: 3, firstName: "Julie", lastName: "Eaker"},
-          {id: 4, firstName: "Carla", lastName: "Sanchez"},
-          {id: 5, firstName: "Javier", lastName: "Smith"}
-      ]
-      console.log({team})
-      return { team }
+    props: {
+      team: Array
     }
   }
 </script>
