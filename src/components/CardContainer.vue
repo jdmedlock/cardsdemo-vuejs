@@ -1,5 +1,5 @@
 <template>
-  <Card v-for="member in team" :member="member" :key="member.id"></Card>
+  <Card v-for="task in tasks" :task="task" :key="task.id"></Card>
 </template>
 
 <script>
@@ -11,7 +11,8 @@
       Card
     },
     props: {
-      team: Array
-    }
+      tasks: Array
+    },
   }
+
 </script>

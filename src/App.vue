@@ -2,30 +2,74 @@
   <div className="App">
     <header className="App-header">
       <h1>VueJS Cards Demo</h1>
-      <CardContainer :team="team"/>
+      <CardContainer :tasks="getTasks()"/>
     </header>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import { createStore } from 'vuex'
   import CardContainer from './components/CardContainer.vue'
 
+  const EMPTY = 'EMPTY'
+  const FAILED = 'FAILED'
+  const LOADED = 'LOADED'
+
+  // Define the store to contain the `tasks` & associated methods
+  const tasks = createStore({
+    state: {
+      isTasksLoaded: EMPTY,
+      tasks: []
+    },
+    mutations: {
+      SET_STATUS(state, status) {
+        state.isTasksLoaded = status
+      },
+      SET_TASKS(state, tasks) {
+        state.tasks = tasks
+      }
+    },
+    actions: {
+      // Retrieve the array of task objects from the BE server
+      fetchTasks(context) {
+        const config = {
+          method: 'get',
+          url: 'http://localhost:5000/splash',
+          headers: { }
+        }
+        axios(config)
+          .then((response) => {
+            context.commit('SET_STATUS', LOADED)
+            context.commit('SET_TASKS', response.data)
+          })
+          .catch((error) => {
+            context.commit('SET_STATUS', FAILED)
+            console.log({error})
+          })
+      }
+    }
+  })
+
+  // Define is App component & it's methods. Checkout that `setup` is returning
+  // the `getTasks` method that returns the array containing the task objects.
+  // that have been retrieved from the BE server.
   export default {
     name: 'App',
     components: {
       CardContainer
     },
     setup() {
-      const team = [
-        {id: 1, firstName: "John", lastName: "Roku"},
-        {id: 2, firstName: "Rakesh", lastName: "Singh"},
-        {id: 3, firstName: "Julie", lastName: "Eaker"},
-        {id: 4, firstName: "Carla", lastName: "Sanchez"},
-        {id: 5, firstName: "Javier", lastName: "Smith"}
-      ]
-      return { team }
+      //const store = useStore()
+      const getTasks = () => tasks.state.tasks
+
+      tasks.dispatch('fetchTasks')
+      return { 
+        getTasks
+      }
     }
   }
+
 </script>
 
 <style>

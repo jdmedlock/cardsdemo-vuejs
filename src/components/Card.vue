@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="band"></div>
-    <p class="content">{{ member.firstName }}, {{ member.lastName }}</p>
+    <p class="content">Title:{{ task.title }}  -  Location:{{task.location}}  -  Status:{{ task.status }}</p>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
   export default {
     name: 'Card',
     props: {
-      member: Object
+      task: Object
     }
   }
 </script>
